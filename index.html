@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="手写签字">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <title>手写签字</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Upload Screen -->
+    <div id="uploadScreen" class="screen">
+        <div class="container">
+            <header class="app-header">
+                <div class="app-logo">
+                    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="#2563eb" stroke-width="2.5">
+                        <rect x="6" y="8" width="28" height="24" rx="3" fill="#dbeafe"/>
+                        <path d="M12 22c3-1 5-3 7-6s4-5 7-6" stroke="#2563eb" stroke-linecap="round"/>
+                        <path d="M26 8l4 4-2 2-4-4z" fill="#2563eb"/>
+                    </svg>
+                </div>
+                <h1>手写签字</h1>
+                <p>上传文档，框选位置，手写签名</p>
+            </header>
+            <main class="upload-area">
+                <div id="dropZone" class="drop-zone">
+                    <div class="drop-zone-icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M24 6v24M14 16l10-10 10 10M8 34v6a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2v-6"/>
+                        </svg>
+                    </div>
+                    <p class="drop-zone-text">点击选择文档</p>
+                    <p class="drop-zone-hint">支持 .docx 和 .pdf 格式</p>
+                    <input type="file" id="fileInput" accept=".docx,.pdf" hidden>
+                </div>
+                <div id="fileInfo" class="file-info" style="display:none;">
+                    <div class="file-card">
+                        <span class="file-icon">📄</span>
+                        <span id="fileName" class="file-name"></span>
+                    </div>
+                </div>
+                <div id="progressBar" class="progress-bar" style="display:none;">
+                    <div class="progress-fill"></div>
+                </div>
+                <button id="confirmBtn" class="btn btn-primary" style="display:none;">
+                    开始编辑
+                </button>
+                <div id="errorMsg" class="error-msg" style="display:none;"></div>
+            </main>
+            <footer class="app-footer">
+                <p>纯前端应用 &middot; 文件不上传服务器 &middot; 数据安全</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Editor Screen -->
+    <div id="editorScreen" class="screen" style="display:none;">
+        <header class="editor-header">
+            <button class="back-btn" id="backBtn">← 返回</button>
+            <h1>框选签字</h1>
+            <span class="doc-status" id="docStatus">待签字</span>
+        </header>
+        <div class="toolbar-hint" id="toolbarHint">
+            在文档上拖拽框选签字区域，然后点击框选区签名
+        </div>
+        <div id="loadingHint" class="loading-hint" style="display:none;">正在渲染文档...</div>
+        <main class="editor-main">
+            <div class="doc-container" id="docContainer">
+                <div class="doc-paper" id="docPaper">
+                    <div id="pagesWrapper" class="pages-wrapper"></div>
+                    <div class="selection-overlay" id="selectionOverlay"></div>
+                    <div class="signatures-layer" id="signaturesLayer"></div>
+                </div>
+            </div>
+        </main>
+        <!-- Signature Pad Modal -->
+        <div class="modal-overlay" id="signatureModal" style="display:none;">
+            <div class="signature-pad-container">
+                <div class="pad-header">
+                    <h2>手写签名</h2>
+                    <button class="close-btn" id="closePadBtn">&times;</button>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="signatureCanvas"></canvas>
+                    <div class="canvas-hint" id="canvasHint">在此区域手写签名</div>
+                </div>
+                <div class="pad-actions">
+                    <button class="btn btn-secondary" id="clearBtn">清除</button>
+                    <button class="btn btn-secondary" id="undoBtn">撤销</button>
+                    <button class="btn btn-primary" id="confirmSignBtn">确认签名</button>
+                </div>
+            </div>
+        </div>
+        <!-- Download Bar -->
+        <div class="download-bar" id="downloadBar" style="display:none;">
+            <button class="btn btn-download" id="downloadBtn">下载已签字文档 (PDF)</button>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="js/lib/jszip.min.js"></script>
+    <script src="js/lib/docx-preview.min.js"></script>
+    <script src="js/lib/pdf.min.js"></script>
+    <script src="js/lib/pdf-lib.min.js"></script>
+    <script src="js/lib/html2canvas.min.js"></script>
+    <!-- App -->
+    <script src="js/app.js"></script>
+</body>
+</html>

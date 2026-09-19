@@ -1,0 +1,22 @@
+{
+    "name": "手写签字",
+    "short_name": "签字",
+    "description": "上传文档，框选位置，手写签名",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#2563eb",
+    "background_color": "#f8fafc",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
